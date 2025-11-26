@@ -1,0 +1,45 @@
+categories:
+  - id: deep_rl
+    name: "Deep Reinforcement Learning"
+    keywords:
+      - "reinforcement learning"
+      - "policy gradient"
+      - "actor-critic"
+      - "q-learning"
+      - "value function"
+      - "temporal-difference"
+    min_hits: 1
+
+  - id: offline_rl
+    name: "Offline / Batch RL"
+    keywords:
+      - "offline reinforcement learning"
+      - "batch reinforcement learning"
+      - "conservative q-learning"
+    min_hits: 1
+
+  - id: meta_rl
+    name: "Meta-RL / Few-shot RL"
+    keywords:
+      - "meta-reinforcement learning"
+      - "meta rl"
+      - "few-shot reinforcement learning"
+    min_hits: 1
+
+  - id: exploration
+    name: "Exploration / Intrinsic Motivation"
+    keywords:
+      - "exploration"
+      - "intrinsic motivation"
+      - "curiosity-driven"
+      - "count-based exploration"
+    min_hits: 1
+
+  - id: general_dl
+    name: "General Deep Learning"
+    keywords:
+      - "transformer"
+      - "diffusion model"
+      - "self-supervised learning"
+      - "representation learning"
+    min_hits: 2

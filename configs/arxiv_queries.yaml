@@ -1,0 +1,17 @@
+arxiv:
+  date_window_days: 7
+  max_results_per_query: 200
+
+  queries:
+    - id: rl_core
+      description: "Reinforcement learning core"
+      search_query: "cat:cs.LG+AND+ti:\"reinforcement learning\""
+    - id: deep_rl
+      description: "Deep RL / Policy gradient"
+      search_query: "cat:cs.LG+AND+abs:\"policy gradient\" OR abs:\"actor-critic\""
+    - id: offline_rl
+      description: "Offline / batch RL"
+      search_query: "cat:cs.LG+AND+abs:\"offline reinforcement learning\" OR abs:\"batch RL\""
+    - id: general_dl
+      description: "General deep learning (filters via taxonomy later)"
+      search_query: "cat:cs.LG+OR+cat:cs.AI+OR+cat:stat.ML"

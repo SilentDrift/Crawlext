@@ -1,0 +1,24 @@
+blogs:
+  - id: deepmind
+    base_url: "https://www.deepmind.com/blog"
+    type: "rss"
+    rss_url: "https://www.deepmind.com/blog/rss.xml"
+    priority_weight: 1.5
+
+  - id: openai
+    base_url: "https://openai.com/blog"
+    type: "html"
+    list_path: "/blog"
+    priority_weight: 1.5
+
+  - id: lil-log
+    base_url: "https://lilianweng.github.io"
+    type: "html"
+    list_path: "/posts"
+    priority_weight: 1.2
+
+  - id: misc_personal
+    base_url: "https://example-rl-blog.com"
+    type: "rss"
+    rss_url: "https://example-rl-blog.com/feed"
+    priority_weight: 1.0

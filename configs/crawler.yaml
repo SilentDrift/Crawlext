@@ -1,0 +1,11 @@
+output:
+  raw_dir: "data/raw"
+  normalized_dir: "data/normalized"
+  reports_dir: "data/reports"
+
+window:
+  date_window_days: 7
+
+scrapy:
+  concurrent_requests: 8
+  download_delay: 0.25

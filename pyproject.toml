@@ -1,0 +1,19 @@
+[project]
+name = "rl-research-crawler"
+version = "0.1.0"
+description = "Weekly RL/DL radar: Scrapy crawlers for arXiv and blogs, with taxonomy + digest."
+authors = [{name = "Your Name", email = "you@example.com"}]
+requires-python = ">=3.10"
+dependencies = [
+    "scrapy>=2.11.0",
+    "pyyaml>=6.0",
+    "python-dateutil>=2.8.2",
+    "beautifulsoup4>=4.12.2",
+    "lxml>=4.9.3",
+    "feedparser>=6.0.10",
+    "pytest>=7.4.0",
+]
+
+[build-system]
+requires = ["setuptools>=65"]
+build-backend = "setuptools.build_meta"
