@@ -6,13 +6,20 @@ from xml.etree import ElementTree
 ARXIV_API_URL = os.getenv("ARXIV_API_URL", "https://export.arxiv.org/api/query")
 
 
-def build_query_url(search_query: str, start_date: datetime, end_date: datetime, max_results: int) -> str:
+def build_query_url(
+    search_query: str,
+    start_date: datetime,
+    end_date: datetime,
+    max_results: int,
+    start: int = 0,
+) -> str:
     date_clause = f"submittedDate:[{start_date.strftime('%Y%m%d')}0000+TO+{end_date.strftime('%Y%m%d')}2359]"
     query = f"({search_query})+AND+{date_clause}"
     return (
         f"{ARXIV_API_URL}?"
         f"search_query={query}"
         f"&sortBy=submittedDate&sortOrder=descending"
+        f"&start={start}"
         f"&max_results={max_results}"
     )
 

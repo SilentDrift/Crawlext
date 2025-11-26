@@ -13,6 +13,7 @@ class NormalizeArxivItemPipeline:
     def __init__(self):
         cfg = load_yaml("crawler.yaml")
         self.window_days = int((cfg.get("window") or {}).get("date_window_days", 7))
+        self.seen_ids = set()
 
     def process_item(self, item, spider):
         if not isinstance(item, ArxivRawItem):
@@ -29,9 +30,14 @@ class NormalizeArxivItemPipeline:
         if not rl_tags:
             rl_tags = ["general_dl"]
 
+        arxiv_id = item.get("arxiv_id")
+        if arxiv_id in self.seen_ids:
+            raise DropItem(f"Duplicate arxiv item: {arxiv_id}")
+        self.seen_ids.add(arxiv_id)
+
         paper = PaperItem()
         paper["source"] = "arxiv"
-        paper["arxiv_id"] = item.get("arxiv_id")
+        paper["arxiv_id"] = arxiv_id
         paper["url"] = item.get("url")
         paper["title"] = title.strip()
         paper["authors"] = item.get("authors") or []

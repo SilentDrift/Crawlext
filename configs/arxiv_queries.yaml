@@ -1,6 +1,7 @@
 arxiv:
   date_window_days: 7
-  max_results_per_query: 200
+  page_size: 200
+  max_pages: 3
 
   queries:
     - id: rl_core
@@ -9,9 +10,18 @@ arxiv:
     - id: deep_rl
       description: "Deep RL / Policy gradient"
       search_query: "cat:cs.LG+AND+abs:\"policy gradient\" OR abs:\"actor-critic\""
+    - id: model_based
+      description: "Model-based RL and planning"
+      search_query: "cat:cs.LG+AND+(abs:\"model-based reinforcement learning\" OR abs:\"world model\" OR abs:\"planning\")"
     - id: offline_rl
       description: "Offline / batch RL"
       search_query: "cat:cs.LG+AND+abs:\"offline reinforcement learning\" OR abs:\"batch RL\""
+    - id: rlhf
+      description: "RLHF / preference optimization"
+      search_query: "cat:cs.LG+AND+(abs:\"reinforcement learning from human feedback\" OR abs:\"preference optimization\" OR abs:\"direct preference optimization\" OR abs:\"DPO\" OR abs:\"KTO\" OR abs:\"IPO\")"
+    - id: safe_rl
+      description: "Safe RL / constrained RL"
+      search_query: "cat:cs.LG+AND+(abs:\"safe reinforcement learning\" OR abs:\"constrained reinforcement learning\" OR abs:\"risk-sensitive RL\")"
     - id: general_dl
       description: "General deep learning (filters via taxonomy later)"
       search_query: "cat:cs.LG+OR+cat:cs.AI+OR+cat:stat.ML"

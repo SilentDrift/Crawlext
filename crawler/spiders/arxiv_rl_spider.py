@@ -14,7 +14,8 @@ class ArxivRlSpider(scrapy.Spider):
         super().__init__(*args, **kwargs)
         cfg = load_yaml("arxiv_queries.yaml").get("arxiv") or {}
         self.date_window_days = int(cfg.get("date_window_days", 7))
-        self.max_results = int(cfg.get("max_results_per_query", 200))
+        self.page_size = int(cfg.get("page_size", 200))
+        self.max_pages = int(cfg.get("max_pages", 3))
         self.queries = cfg.get("queries") or []
 
     def start_requests(self):
@@ -25,12 +26,14 @@ class ArxivRlSpider(scrapy.Spider):
             query_id = query.get("id")
             if not search_query:
                 continue
-            url = arxiv_client.build_query_url(search_query, start_date, end_date, self.max_results)
-            yield scrapy.Request(
-                url=url,
-                callback=self.parse,
-                meta={"query_id": query_id, "search_query": search_query},
-            )
+            for page in range(self.max_pages):
+                start = page * self.page_size
+                url = arxiv_client.build_query_url(search_query, start_date, end_date, self.page_size, start=start)
+                yield scrapy.Request(
+                    url=url,
+                    callback=self.parse,
+                    meta={"query_id": query_id, "search_query": search_query, "page": page},
+                )
 
     def parse(self, response):
         query_id = response.meta.get("query_id")
