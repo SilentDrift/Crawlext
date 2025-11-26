@@ -1,6 +1,6 @@
-# RL / DL Research Radar
+# Crawlext
 
-Scrapy-based weekly crawler that gathers fresh reinforcement learning / deep learning papers and blog posts, filters them with a simple taxonomy, scores them, stores JSONL, and emits a Markdown weekly digest.
+Weekly Scrapy-based research radar that crawls arXiv and key RL/DL blogs, filters and scores papers and posts, and generates structured digests summarizing the most relevant recent work for reinforcement learning.
 
 ## What it does
 - Hits arXiv with a set of ML/RL queries for the last `N` days (default 7).
