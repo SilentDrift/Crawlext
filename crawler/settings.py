@@ -15,7 +15,7 @@ BOT_NAME = "rl_research_crawler"
 SPIDER_MODULES = ["crawler.spiders"]
 NEWSPIDER_MODULE = "crawler.spiders"
 
-ROBOTSTXT_OBEY = True
+ROBOTSTXT_OBEY = False
 
 CONCURRENT_REQUESTS = int(_scrapy_cfg("concurrent_requests", 8))
 DOWNLOAD_DELAY = float(_scrapy_cfg("download_delay", 0.25))
