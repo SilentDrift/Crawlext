@@ -55,16 +55,17 @@ class NormalizeBlogItemPipeline:
             return item
 
         published_at = item.get("published_at")
-        if published_at and not time_utils.is_within_last_n_days(published_at, self.window_days):
-            raise DropItem(f"Blog item outside window: {published_at}")
-        if not published_at:
-            raise DropItem("Blog item missing published_at")
+        fallback_date = published_at or item.get("collected_at")
+        if fallback_date and not time_utils.is_within_last_n_days(fallback_date, self.window_days):
+            raise DropItem(f"Blog item outside window: {fallback_date}")
 
         text = html_extraction.extract_main_text(item.get("html"))
         clean_blob = f"{text_cleaning.clean_text(item.get('title'))} {text_cleaning.clean_text(text)}"
         rl_tags = rl_classification.classify_rl(clean_blob)
+        if "arxiv.org/abs" in (item.get("html") or ""):
+            rl_tags = list(set(rl_tags + ["paper_reference"]))
         if not rl_tags:
-            raise DropItem("Blog item has no RL tags")
+            rl_tags = ["general_dl"]
 
         post = BlogPostItem()
         post["source"] = item.get("source")

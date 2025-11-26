@@ -8,6 +8,8 @@ import feedparser
 
 from crawler.items import BlogRawItem
 from crawler.utils.config import load_yaml
+from crawler.utils.time_utils import format_iso
+from datetime import datetime, timezone
 
 
 class BlogSpider(scrapy.Spider):
@@ -49,13 +51,19 @@ class BlogSpider(scrapy.Spider):
         source_id = response.meta.get("source_id")
         feed = feedparser.parse(response.text)
         for entry in feed.entries:
-            published = entry.get("published") or entry.get("updated")
+            published = entry.get("published") or entry.get("updated") or entry.get("created")
+            if not published and entry.get("published_parsed"):
+                try:
+                    published = datetime(*entry.published_parsed[:6], tzinfo=timezone.utc).isoformat()
+                except Exception:
+                    published = None
             yield BlogRawItem(
                 source=source_id,
                 url=entry.get("link"),
                 title=entry.get("title"),
                 published_at=self._safe_iso(published),
                 html=entry.get("summary") or entry.get("content", [{}])[0].get("value"),
+                collected_at=format_iso(datetime.now(timezone.utc)),
             )
 
     def parse_html_index(self, response):
@@ -77,19 +85,26 @@ class BlogSpider(scrapy.Spider):
         title = title_tag.get_text(strip=True) if title_tag else response.url
         date_tag = soup.find("time")
         published = date_tag.get("datetime") if date_tag else None
+        if not published:
+            from crawler.utils.html_extraction import extract_published_at  # lazy import to avoid cycles
+            published = extract_published_at(response.text)
         yield BlogRawItem(
             source=source_id,
             url=response.url,
             title=title,
             published_at=self._safe_iso(published),
             html=response.text,
+            collected_at=format_iso(datetime.now(timezone.utc)),
         )
 
     def _extract_links(self, soup: BeautifulSoup) -> Iterable[str]:
         selectors = ["article a", "h2 a", "h3 a", "a"]
         seen = set()
+        max_links = 20
         for selector in selectors:
             for tag in soup.select(selector):
+                if len(seen) >= max_links:
+                    return
                 href = tag.get("href")
                 if href and href not in seen and href.startswith(("/", "http")):
                     seen.add(href)

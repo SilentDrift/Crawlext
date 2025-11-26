@@ -36,6 +36,7 @@ class BlogRawItem(scrapy.Item):
     title = scrapy.Field()
     published_at = scrapy.Field()
     html = scrapy.Field()
+    collected_at = scrapy.Field()
 
 
 class BlogPostItem(scrapy.Item):
