@@ -31,7 +31,6 @@ SPIDER_MIDDLEWARES = {}
 
 ITEM_PIPELINES = {
     "crawler.pipelines.NormalizeArxivItemPipeline": 200,
-    "crawler.pipelines.NormalizeBlogItemPipeline": 210,
     "crawler.pipelines.JsonWriterPipeline": 300,
 }
 

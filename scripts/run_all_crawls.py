@@ -13,7 +13,6 @@ def main():
     settings = get_project_settings()
     process = CrawlerProcess(settings)
     process.crawl("arxiv_rl_spider")
-    process.crawl("blog_spider")
     process.start()
 
 
